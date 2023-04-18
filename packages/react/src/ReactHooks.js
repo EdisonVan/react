@@ -96,9 +96,11 @@ export function useContext<T>(Context: ReactContext<T>): T {
   return dispatcher.useContext(Context);
 }
 
+/* TODO 源码阅读：useState（实际为useReducer的一部分）实现 */
 export function useState<S>(
   initialState: (() => S) | S,
 ): [S, Dispatch<BasicStateAction<S>>] {
+  /* initialState为使用useState时传入的方法 */
   const dispatcher = resolveDispatcher();
   return dispatcher.useState(initialState);
 }

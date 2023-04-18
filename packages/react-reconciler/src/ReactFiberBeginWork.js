@@ -1116,6 +1116,7 @@ function updateFunctionComponent(
 
   let nextChildren;
   let hasId;
+  /* 读取context，会形成一个组件跟context串联的依赖关系，告诉FunctionComponent需要更新 */
   prepareToReadContext(workInProgress, renderLanes);
   if (enableSchedulingProfiler) {
     markComponentRenderStarted(workInProgress);
