@@ -106,7 +106,6 @@ import {
   enableLegacyHidden,
   enableCPUSuspense,
   enableFloat,
-  enableHostSingletons,
   enableFormActions,
   enableAsyncActions,
   enablePostpone,
@@ -4152,7 +4151,7 @@ function beginWork(
       }
     // Fall through
     case HostSingleton:
-      if (enableHostSingletons && supportsSingletons) {
+      if (supportsSingletons) {
         return updateHostSingleton(current, workInProgress, renderLanes);
       }
     // Fall through
