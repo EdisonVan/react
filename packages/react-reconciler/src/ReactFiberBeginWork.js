@@ -533,7 +533,6 @@ function updateMemoComponent(
       Component.type,
       null,
       nextProps,
-      null,
       workInProgress,
       workInProgress.mode,
       renderLanes,
@@ -2098,16 +2097,13 @@ function validateFunctionComponentInDev(workInProgress: Fiber, Component: any) {
     }
     if (workInProgress.ref !== null) {
       let info = '';
+      const componentName = getComponentNameFromType(Component) || 'Unknown';
       const ownerName = getCurrentFiberOwnerNameInDevOrNull();
       if (ownerName) {
         info += '\n\nCheck the render method of `' + ownerName + '`.';
       }
 
-      let warningKey = ownerName || '';
-      const debugSource = workInProgress._debugSource;
-      if (debugSource) {
-        warningKey = debugSource.fileName + ':' + debugSource.lineNumber;
-      }
+      const warningKey = componentName + '|' + (ownerName || '');
       if (!didWarnAboutFunctionRefs[warningKey]) {
         didWarnAboutFunctionRefs[warningKey] = true;
         console.error(
@@ -4059,7 +4055,6 @@ function beginWork(
           workInProgress.type,
           workInProgress.key,
           workInProgress.pendingProps,
-          workInProgress._debugSource || null,
           workInProgress._debugOwner || null,
           workInProgress.mode,
           workInProgress.lanes,
