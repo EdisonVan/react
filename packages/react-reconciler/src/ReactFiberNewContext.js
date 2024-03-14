@@ -716,7 +716,7 @@ export function readContext<T>(context: ReactContext<T>): T {
   return readContextForConsumer(currentlyRenderingFiber, context);
 }
 
-export function readContextDuringReconcilation<T>(
+export function readContextDuringReconciliation<T>(
   consumer: Fiber,
   context: ReactContext<T>,
   renderLanes: Lanes,
