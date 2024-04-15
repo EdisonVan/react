@@ -1,4 +1,4 @@
-/** 
+/**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  * Hooks的具体实现
  * This source code is licensed under the MIT license found in the
@@ -441,6 +441,7 @@ function throwInvalidHookError() {
   );
 }
 
+// [A1] 2404151110 遍历Fiber树数组中的每一项，如果相同则continue，不同则退出
 function areHookInputsEqual(
   nextDeps: Array<mixed>,
   prevDeps: Array<mixed> | null,
@@ -2306,7 +2307,7 @@ function rerenderActionState<S, P>(
   return [state, dispatch, false];
 }
 
-function pushEffect(
+function pushEffect( // [A1] 2404151131
   tag: HookFlags,
   create: () => (() => void) | void,
   inst: EffectInstance,
@@ -2318,7 +2319,7 @@ function pushEffect(
     inst,
     deps,
     // Circular
-    next: (null: any),
+    next: (null: any), // next循环指针，指向function component中
   };
   let componentUpdateQueue: null | FunctionComponentUpdateQueue =
     (currentlyRenderingFiber.updateQueue: any);
@@ -2386,11 +2387,12 @@ function updateEffectImpl(
 
   // currentHook is null on initial mount when rerendering after a render phase
   // state update or for strict mode.
+  // NOTE [A1] 2404151107
   if (currentHook !== null) {
     if (nextDeps !== null) {
-      const prevEffect: Effect = currentHook.memoizedState;
+      const prevEffect: Effect = currentHook.memoizedState; // memoizedState记录上一次更新完成的一些状态
       const prevDeps = prevEffect.deps;
-      if (areHookInputsEqual(nextDeps, prevDeps)) {
+      if (areHookInputsEqual(nextDeps, prevDeps)) { // 如果相同则调用pushEffect，传入hookFlags，inst就是destory操作
         hook.memoizedState = pushEffect(hookFlags, create, inst, nextDeps);
         return;
       }

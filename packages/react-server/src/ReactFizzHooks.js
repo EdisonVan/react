@@ -229,7 +229,7 @@ export function prepareToUseHooks(
   thenableState = prevThenableState;
 }
 
-export function finishHooks(
+export function finishHooks( // NOTE [A1] 2404151521
   Component: any,
   props: any,
   children: any,
