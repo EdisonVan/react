@@ -22,4 +22,8 @@
             - useEffect 增加 UnmountPassive | MountPassive
             - 如果 areHookInputsEqual 符合，则增加 NoHookEffect
     - 2404151131 
-    - 2404151521 // 10:22
+    - 2404151521
+        - commitHookEffectListMount
+        - commitPassive 相关函数
+        - ReactFiberCommitWork.js
+            - commitBeforeMutationEffects
